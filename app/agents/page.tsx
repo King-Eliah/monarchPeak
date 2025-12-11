@@ -73,9 +73,9 @@ export default function AgentsPage() {
                     </p>
                   </div>
 
-                  <button className="btn-secondary w-full mt-6">
+                  <a href={`/contact?agent=${encodeURIComponent(agent.name)}&email=${encodeURIComponent(agent.email)}`} className="btn-secondary w-full mt-6 block text-center">
                     Contact Agent
-                  </button>
+                  </a>
                 </div>
               </div>
             ))}

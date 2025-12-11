@@ -20,6 +20,35 @@ export default function PropertiesPage() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Filter properties based on selected criteria
+  const filteredProperties = featuredProperties.filter((property) => {
+    // Location filter
+    if (selectedLocation && property.location.toLowerCase().replace(/\s+/g, '-') !== selectedLocation) {
+      return false;
+    }
+
+    // Price range filter
+    if (selectedPriceRange) {
+      const price = parseInt(property.price.replace(/[$,]/g, ''));
+      if (selectedPriceRange === '0-500000' && price > 500000) return false;
+      if (selectedPriceRange === '500000-1000000' && (price < 500000 || price > 1000000)) return false;
+      if (selectedPriceRange === '1000000-2000000' && (price < 1000000 || price > 2000000)) return false;
+      if (selectedPriceRange === '2000000+' && price < 2000000) return false;
+    }
+
+    // Property type filter
+    if (selectedType && !property.title.toLowerCase().includes(selectedType)) {
+      return false;
+    }
+
+    // Bedrooms filter
+    if (selectedBeds && property.beds < parseInt(selectedBeds)) {
+      return false;
+    }
+
+    return true;
+  });
+
   return (
     <main>
       <Navbar />
@@ -124,14 +153,31 @@ export default function PropertiesPage() {
             <div className="lg:col-span-3">
               <div className="mb-6 flex justify-between items-center">
                 <p className="text-gray-400">
-                  Showing <span className="text-white font-semibold">{featuredProperties.length}</span> properties
+                  Showing <span className="text-white font-semibold">{filteredProperties.length}</span> {filteredProperties.length === 1 ? 'property' : 'properties'}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {featuredProperties.map((property) => (
-                  <PropertyCard key={property.id} {...property} />
-                ))}
+                {filteredProperties.length > 0 ? (
+                  filteredProperties.map((property) => (
+                    <PropertyCard key={property.id} {...property} />
+                  ))
+                ) : (
+                  <div className="col-span-2 text-center py-20">
+                    <p className="text-gray-400 text-lg mb-4">No properties match your criteria</p>
+                    <button 
+                      onClick={() => {
+                        setSelectedLocation('');
+                        setSelectedPriceRange('');
+                        setSelectedType('');
+                        setSelectedBeds('');
+                      }}
+                      className="btn-primary"
+                    >
+                      Reset Filters
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Pagination */}
