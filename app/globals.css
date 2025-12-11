@@ -1,26 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap');
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-gold-50: #FFFEF7;
+  --color-gold-100: #FFF9E6;
+  --color-gold-200: #FFF0C0;
+  --color-gold-300: #FFE799;
+  --color-gold-400: #FFD54D;
+  --color-gold-500: #D4AF37;
+  --color-gold-600: #B8942E;
+  --color-gold-700: #9C7926;
+  --color-gold-800: #805E1D;
+  --color-gold-900: #664315;
+  
+  --color-luxury-black: #0F0F0F;
+  --color-luxury-charcoal: #1A1A1A;
+  --color-luxury-gray: #2A2A2A;
+  
+  --font-family-serif: 'Cormorant Garamond', serif;
+  --font-family-sans: 'Inter', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-luxury-black);
+  color: #E8E8E8;
+  font-family: var(--font-family-sans);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-serif);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.luxury-gradient {
+  background: linear-gradient(to right, var(--color-gold-500), var(--color-gold-400));
+}
+
+.luxury-border {
+  border: 1px solid rgb(212 175 55 / 0.3);
+}
+
+/* Custom Select Dropdown Styling */
+select {
+  background-image: none;
+}
+
+select option {
+  background-color: var(--color-luxury-charcoal);
+  color: white;
+  padding: 12px;
+}
+
+select option:hover {
+  background-color: var(--color-luxury-gray);
+}
+
+.btn-primary {
+  background-color: white;
+  color: var(--color-luxury-black);
+  font-weight: 500;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  border-radius: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid white;
+}
+
+.btn-primary:hover {
+  background-color: transparent;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary {
+  border: 1px solid white;
+  color: white;
+  font-weight: 500;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  border-radius: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: transparent;
+}
+
+.btn-secondary:hover {
+  background-color: white;
+  color: var(--color-luxury-black);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.property-card {
+  background-color: var(--color-luxury-charcoal);
+  border-radius: 0;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.property-card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.property-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  transform: translateY(-10px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideHorizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dropDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes volumeBar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-down {
+  animation: slideInDown 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-text-reveal {
+  animation: textReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-drop-down {
+  animation: dropDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-volume-bar {
+  animation: volumeBar 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slideshow-container {
+  animation: slideHorizontal 60s linear infinite;
+}
+
+.slideshow-container:hover {
+  animation-play-state: paused;
+}
+
+.section-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: var(--font-family-sans);
+  font-weight: 400;
+}
+
+.large-heading {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  line-height: 1.1;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

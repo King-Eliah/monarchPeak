@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prestige Estates - Luxury Real Estate Website
 
-## Getting Started
+A premium, modern luxury real estate website built with Next.js 15, TypeScript, and Tailwind CSS. Showcasing exclusive properties in Ghana's most prestigious neighborhoods.
 
-First, run the development server:
+## ✨ Features
+
+### Pages
+
+- **Home** - Hero section with search, featured properties, testimonials, and locations
+- **Properties** - Full property listings with advanced filtering
+- **Property Details** - Detailed property information, image gallery, and contact form
+- **Agents** - Meet our professional real estate team
+- **About** - Company story, values, and statistics
+- **Contact** - Contact form and business information
+
+### Components
+
+- Responsive Navbar with mobile menu
+- Reusable Property Cards
+- Advanced Search Bar
+- Contact Forms
+- Footer with social links
+- Image Galleries
+
+### Design
+
+- **Color Scheme**: Black & Gold luxury theme
+- **Typography**: Playfair Display (serif) + Inter (sans-serif)
+- **Animations**: Smooth hover effects and transitions
+- **Responsive**: Mobile-first design, works on all devices
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- npm or yarn package manager
+
+### Installation
+
+1. Navigate to the project folder:
+
+```bash
+cd luxury-real-estate
+```
+
+2. Install dependencies (already done):
+
+```bash
+npm install
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open your browser and visit:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```
+luxury-real-estate/
+├── app/
+│   ├── about/page.tsx
+│   ├── agents/page.tsx
+│   ├── contact/page.tsx
+│   ├── properties/
+│   │   ├── [id]/page.tsx
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── ContactForm.tsx
+│   ├── Footer.tsx
+│   ├── Navbar.tsx
+│   ├── PropertyCard.tsx
+│   └── SearchBar.tsx
+├── lib/data.ts
+└── tailwind.config.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Fonts**: Google Fonts (Playfair Display, Inter)
+- **Images**: Next.js Image component with Unsplash
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📦 Build for Production
 
-## Deploy on Vercel
+```bash
+npm run build
+npm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🌐 Deploy to Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push to GitHub
+2. Visit [vercel.com](https://vercel.com)
+3. Import your repository
+4. Deploy automatically
+
+---
+
+Built with ❤️ for luxury real estate in Ghana

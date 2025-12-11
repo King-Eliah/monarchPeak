@@ -1,0 +1,145 @@
+// Mock data for the website
+
+export const featuredProperties = [
+  {
+    id: '1',
+    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800',
+    price: '$1.2M',
+    title: 'Luxurious Airport Hills Mansion',
+    location: 'Airport Hills, Accra',
+    beds: 6,
+    baths: 5,
+    sqft: '6,500 sq ft',
+    description: 'An architectural masterpiece featuring contemporary design, infinity pool, home theater, and panoramic city views.',
+    amenities: ['Infinity Pool', 'Home Theater', 'Smart Home System', '24/7 Security', 'Wine Cellar', 'Gym', 'Garden'],
+  },
+  {
+    id: '2',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
+    price: '$950K',
+    title: 'Modern East Legon Villa',
+    location: 'East Legon, Accra',
+    beds: 5,
+    baths: 4,
+    sqft: '5,200 sq ft',
+    description: 'Contemporary villa with open-plan living, gourmet kitchen, and lush tropical gardens.',
+    amenities: ['Swimming Pool', 'Gourmet Kitchen', 'Garden', 'Garage', 'Study Room', 'Balcony'],
+  },
+  {
+    id: '3',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
+    price: '$1.5M',
+    title: 'Cantonments Penthouse',
+    location: 'Cantonments, Accra',
+    beds: 4,
+    baths: 4,
+    sqft: '4,800 sq ft',
+    description: 'Exclusive penthouse with breathtaking views, private elevator, and rooftop terrace.',
+    amenities: ['Rooftop Terrace', 'Private Elevator', 'Jacuzzi', 'Smart Home', 'Concierge Service'],
+  },
+  {
+    id: '4',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
+    price: '$2.1M',
+    title: 'Ridge Executive Estate',
+    location: 'Ridge, Accra',
+    beds: 7,
+    baths: 6,
+    sqft: '8,000 sq ft',
+    description: 'Sprawling estate with guest house, tennis court, and manicured gardens.',
+    amenities: ['Guest House', 'Tennis Court', 'Pool', 'Home Office', 'Library', 'Staff Quarters'],
+  },
+];
+
+export const agents = [
+  {
+    id: '1',
+    name: 'Kwame Mensah',
+    role: 'Senior Luxury Agent',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400',
+    phone: '+233 123 456 789',
+    email: 'kwame@monarchpeak.gh',
+    bio: 'With over 15 years of experience in luxury real estate, Kwame specializes in high-end properties across Accra.',
+    properties: 45,
+  },
+  {
+    id: '2',
+    name: 'Akosua Boateng',
+    role: 'Luxury Property Specialist',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400',
+    phone: '+233 123 456 790',
+    email: 'akosua@monarchpeak.gh',
+    bio: 'Akosua brings a refined eye for architectural excellence and a passion for matching clients with their dream homes.',
+    properties: 38,
+  },
+  {
+    id: '3',
+    name: 'Kofi Asante',
+    role: 'Investment Advisor',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',
+    phone: '+233 123 456 791',
+    email: 'kofi@monarchpeak.gh',
+    bio: 'Specializing in investment properties and portfolio management for discerning international clients.',
+    properties: 52,
+  },
+  {
+    id: '4',
+    name: 'Ama Owusu',
+    role: 'Client Relations Manager',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400',
+    phone: '+233 123 456 792',
+    email: 'ama@monarchpeak.gh',
+    bio: 'Dedicated to providing exceptional service and ensuring every client finds their perfect luxury residence.',
+    properties: 31,
+  },
+];
+
+export const testimonials = [
+  {
+    id: '1',
+    name: 'David Thompson',
+    role: 'CEO, Tech Innovations',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400',
+    text: 'MonarchPeak helped me find the perfect home in Airport Hills. Their professionalism and attention to detail are unmatched.',
+    rating: 5,
+  },
+  {
+    id: '2',
+    name: 'Sophia Anderson',
+    role: 'International Investor',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
+    text: 'Outstanding service from start to finish. They understood exactly what I was looking for and delivered beyond expectations.',
+    rating: 5,
+  },
+  {
+    id: '3',
+    name: 'Michael Chen',
+    role: 'Entrepreneur',
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400',
+    text: 'The team at MonarchPeak made my property purchase seamless. Highly recommended for luxury real estate in Ghana.',
+    rating: 5,
+  },
+];
+
+export const cities = [
+  {
+    name: 'Airport Hills',
+    properties: 24,
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600',
+  },
+  {
+    name: 'East Legon',
+    properties: 32,
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600',
+  },
+  {
+    name: 'Cantonments',
+    properties: 18,
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600',
+  },
+  {
+    name: 'Ridge',
+    properties: 15,
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600',
+  },
+];
