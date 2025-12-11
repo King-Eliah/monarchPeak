@@ -169,7 +169,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
 
             {/* Contact Agent Form */}
             <div className="lg:col-span-1">
-              <div className="bg-luxury-black p-8 sticky top-24 border border-white/10">
+              <div className="bg-luxury-black p-6 md:p-8 md:sticky md:top-24 border border-white/10">
                 <h3 className="text-2xl font-serif mb-6 text-white" style={{fontWeight: 300, letterSpacing: '0.1em'}}>
                   CONTACT AGENT
                 </h3>

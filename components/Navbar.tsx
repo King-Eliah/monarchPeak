@@ -25,7 +25,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ${scrolled ? 'bg-luxury-black border-b border-white/10' : 'bg-transparent'}`}>
+    <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ${scrolled || isMenuOpen ? 'bg-luxury-black' : 'bg-transparent'}`}>
       <div className="max-w-[95%] mx-auto px-8">
         <div className="flex justify-between items-center h-24">
           {/* Logo */}
