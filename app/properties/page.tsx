@@ -212,7 +212,7 @@ export default function PropertiesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {filteredProperties.length > 0 ? (
                   filteredProperties.map((property) => (
-                    <PropertyCard key={property.id} {...property} />
+                    <PropertyCard key={property.id} {...property} area={property.sqft} />
                   ))
                 ) : (
                   <div className="col-span-2 text-center py-20">

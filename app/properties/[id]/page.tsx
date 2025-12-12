@@ -188,7 +188,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {similarProperties.map((prop) => (
-              <PropertyCard key={prop.id} {...prop} />
+              <PropertyCard key={prop.id} {...prop} area={prop.sqft} />
             ))}
           </div>
         </div>
