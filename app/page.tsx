@@ -253,13 +253,13 @@ export default function Home() {
           {/* Desktop Grid */}
           <div className="hidden md:grid md:grid-cols-3 gap-6 mb-12">
             <div ref={property1.elementRef}>
-              <PropertyCard {...featuredProperties[0]} area={featuredProperties[0].sqft} />
+              <PropertyCard {...featuredProperties[0]} area={featuredProperties[0]?.sqft || ''} />
             </div>
             <div ref={property2.elementRef}>
-              <PropertyCard {...featuredProperties[1]} area={featuredProperties[1].sqft} />
+              <PropertyCard {...featuredProperties[1]} area={featuredProperties[1]?.sqft || ''} />
             </div>
             <div ref={property3.elementRef}>
-              <PropertyCard {...featuredProperties[2]} area={featuredProperties[2].sqft} />
+              <PropertyCard {...featuredProperties[2]} area={featuredProperties[2]?.sqft || ''} />
             </div>
           </div>
           
@@ -267,13 +267,13 @@ export default function Home() {
           <div className="md:hidden overflow-x-auto scrollbar-hide -mx-8 px-8 mb-12">
             <div className="flex gap-6" style={{width: 'max-content'}}>
               <div ref={property1.elementRef} className="w-[85vw] shrink-0">
-                <PropertyCard {...featuredProperties[0]} area={featuredProperties[0].sqft} />
+                <PropertyCard {...featuredProperties[0]} area={featuredProperties[0]?.sqft || ''} />
               </div>
               <div ref={property2.elementRef} className="w-[85vw] shrink-0">
-                <PropertyCard {...featuredProperties[1]} area={featuredProperties[1].sqft} />
+                <PropertyCard {...featuredProperties[1]} area={featuredProperties[1]?.sqft || ''} />
               </div>
               <div ref={property3.elementRef} className="w-[85vw] shrink-0">
-                <PropertyCard {...featuredProperties[2]} area={featuredProperties[2].sqft} />
+                <PropertyCard {...featuredProperties[2]} area={featuredProperties[2]?.sqft || ''} />
               </div>
             </div>
           </div>
