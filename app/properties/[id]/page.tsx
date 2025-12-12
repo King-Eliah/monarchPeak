@@ -187,6 +187,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
             SIMILAR PROPERTIES
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Map similar properties with area prop from sqft */}
             {similarProperties.map((prop) => (
               <PropertyCard key={prop.id} {...prop} area={prop.sqft} />
             ))}
