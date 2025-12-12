@@ -6,9 +6,11 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 type GalleryImage = {
-  url: string;
+  id?: string;
+  image: string;
   title: string;
-  category: 'Living Room' | 'Kitchen' | 'Bedroom' | 'Bathroom' | 'Exterior' | 'Dining Room';
+  category: string;
+  visible?: boolean;
 };
 
 export default function GalleryPage() {
@@ -18,9 +20,20 @@ export default function GalleryPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [showCounter, setShowCounter] = useState(true);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Fetch gallery images from API
+    fetch('/api/gallery')
+      .then(res => res.json())
+      .then(data => {
+        // Filter only visible images
+        const visibleImages = data.filter((img: GalleryImage) => img.visible !== false);
+        setGalleryImages(visibleImages);
+      })
+      .catch(() => setGalleryImages([]));
   }, []);
 
   useEffect(() => {
@@ -33,141 +46,8 @@ export default function GalleryPage() {
     }
   }, [lightboxOpen, currentImageIndex]);
 
-  const galleryImages: GalleryImage[] = [
-    // Living Room
-    {
-      url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200',
-      title: 'Modern Living Space',
-      category: 'Living Room'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200',
-      title: 'Contemporary Lounge',
-      category: 'Living Room'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200',
-      title: 'Elegant Living Area',
-      category: 'Living Room'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=1200',
-      title: 'Luxury Living Suite',
-      category: 'Living Room'
-    },
-    
-    // Kitchen
-    {
-      url: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=1200',
-      title: 'Gourmet Kitchen',
-      category: 'Kitchen'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200',
-      title: 'Modern Culinary Space',
-      category: 'Kitchen'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=1200',
-      title: 'Chef\'s Kitchen',
-      category: 'Kitchen'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1556912998-c57cc6b63cd7?w=1200',
-      title: 'Contemporary Kitchen Design',
-      category: 'Kitchen'
-    },
-    
-    // Bedroom
-    {
-      url: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200',
-      title: 'Master Bedroom Suite',
-      category: 'Bedroom'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200',
-      title: 'Luxury Sleeping Quarter',
-      category: 'Bedroom'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1200',
-      title: 'Elegant Bedroom',
-      category: 'Bedroom'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=1200',
-      title: 'Modern Bedroom Design',
-      category: 'Bedroom'
-    },
-    
-    // Bathroom
-    {
-      url: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200',
-      title: 'Spa-Like Bathroom',
-      category: 'Bathroom'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?w=1200',
-      title: 'Master Bathroom',
-      category: 'Bathroom'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=1200',
-      title: 'Luxury Ensuite',
-      category: 'Bathroom'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=1200',
-      title: 'Modern Bathroom',
-      category: 'Bathroom'
-    },
-    
-    // Exterior
-    {
-      url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200',
-      title: 'Luxury Estate Facade',
-      category: 'Exterior'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200',
-      title: 'Modern Architecture',
-      category: 'Exterior'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200',
-      title: 'Grand Entrance',
-      category: 'Exterior'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200',
-      title: 'Architectural Excellence',
-      category: 'Exterior'
-    },
-    
-    // Dining Room
-    {
-      url: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=1200',
-      title: 'Formal Dining',
-      category: 'Dining Room'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200',
-      title: 'Elegant Dining Space',
-      category: 'Dining Room'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200',
-      title: 'Modern Dining Area',
-      category: 'Dining Room'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1574643156929-51fa098b0394?w=1200',
-      title: 'Luxury Dining Room',
-      category: 'Dining Room'
-    },
-  ];
-
-  const categories = ['All', 'Living Room', 'Kitchen', 'Bedroom', 'Bathroom', 'Exterior', 'Dining Room'];
+  // Get unique categories from gallery images
+  const categories = ['All', ...Array.from(new Set(galleryImages.map(img => img.category)))];
 
   const filteredImages = selectedCategory === 'All' 
     ? galleryImages 
@@ -258,7 +138,7 @@ export default function GalleryPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredImages.map((image, idx) => {
               const categoryImages = galleryImages.filter(img => img.category === image.category);
-              const imageIndexInCategory = categoryImages.findIndex(img => img.url === image.url);
+              const imageIndexInCategory = categoryImages.findIndex(img => img.image === image.image);
               
               return (
                 <div 
@@ -268,7 +148,7 @@ export default function GalleryPage() {
                   onClick={() => openLightbox(categoryImages, imageIndexInCategory)}
                 >
                   <Image
-                    src={image.url}
+                    src={image.image}
                     alt={image.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700 brightness-[0.7] group-hover:brightness-[0.5]"
@@ -318,7 +198,7 @@ export default function GalleryPage() {
           {/* Image Container */}
           <div className="relative w-full max-w-6xl h-[80vh]" onClick={(e) => e.stopPropagation()}>
             <Image
-              src={selectedImages[currentImageIndex].url}
+              src={selectedImages[currentImageIndex].image}
               alt={selectedImages[currentImageIndex].title}
               fill
               className="object-contain"

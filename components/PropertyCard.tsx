@@ -12,7 +12,7 @@ interface PropertyCardProps {
   location: string;
   beds: number;
   baths: number;
-  sqft: string;
+  area: string;
 }
 
 export default function PropertyCard({
@@ -23,7 +23,7 @@ export default function PropertyCard({
   location,
   beds,
   baths,
-  sqft,
+  area,
 }: PropertyCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -49,12 +49,15 @@ export default function PropertyCard({
   return (
     <div ref={cardRef} className={`property-card group ${isVisible ? 'animate-in' : ''}`}>
       <div className="relative h-72 overflow-hidden">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover group-hover:scale-105 transition-all duration-700"
-        />
+        {image && (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-all duration-700"
+          />
+        )}
         <div className="absolute top-0 right-0 bg-white text-luxury-black px-6 py-3 font-serif" style={{fontWeight: 300, letterSpacing: '0.05em'}}>
           {price}
         </div>
@@ -88,7 +91,7 @@ export default function PropertyCard({
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
             </svg>
-            <span>{sqft}</span>
+            <span>{area}</span>
           </div>
         </div>
         

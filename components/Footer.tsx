@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2 -mt-11">
             <div className="-ml-6">
               <Image 
-                src="/MonarchPeak Logo with Crown.png" 
+                src="/MonarchPeakCrown.png" 
                 alt="MonarchPeak Logo" 
                 width={1200} 
                 height={480}

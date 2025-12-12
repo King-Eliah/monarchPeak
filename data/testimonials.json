@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "name": "Emmanuel Darko",
+    "role": "Business Executive",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+    "rating": 5,
+    "text": "Outstanding service! The team helped us find our dream home. Their professionalism and attention to detail made the entire process smooth and enjoyable.",
+    "visible": true
+  },
+  {
+    "id": "2",
+    "name": "Sarah Oppong",
+    "role": "Entrepreneur",
+    "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400",
+    "rating": 5,
+    "text": "Incredible experience from start to finish. They understood exactly what I was looking for and delivered beyond expectations. Highly recommended!",
+    "visible": true
+  },
+  {
+    "id": "3",
+    "name": "David Osei",
+    "role": "Investment Banker",
+    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
+    "rating": 5,
+    "text": "Professional, knowledgeable, and trustworthy. They guided me through every step of purchasing my investment property. Absolutely fantastic service!",
+    "visible": true
+  },
+  {
+    "id": "4",
+    "name": "Akosua Mensah",
+    "role": "Real Estate Developer",
+    "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400",
+    "rating": 5,
+    "text": "Working with MonarchPeak was a game changer. They found me the perfect location for my business. Their market knowledge is unmatched.",
+    "visible": true
+  },
+  {
+    "id": "5",
+    "name": "Kwabena Agyemang",
+    "role": "Tech Entrepreneur",
+    "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
+    "rating": 5,
+    "text": "I was impressed by their dedication and expertise. They made buying my first luxury property effortless and exciting. Truly exceptional service!",
+    "visible": true
+  },
+  {
+    "id": "6",
+    "name": "Ama Boateng",
+    "role": "Fashion Designer",
+    "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400",
+    "rating": 5,
+    "text": "The attention to detail and personalized service exceeded all my expectations. They helped me find a home that perfectly reflects my style and needs.",
+    "visible": true
+  }
+]

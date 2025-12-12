@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "name": "Kwame Mensah",
+    "role": "Senior Property Consultant",
+    "email": "kwame.mensah@monarchpeak.com",
+    "phone": "+233 24 123 4567",
+    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400",
+    "bio": "Over 15 years of experience in luxury real estate, specializing in high-end residential properties.",
+    "rating": 4.9,
+    "propertiesSold": 127,
+    "visible": true
+  },
+  {
+    "id": "2",
+    "name": "Akosua Boateng",
+    "role": "Luxury Estate Specialist",
+    "email": "akosua.boateng@monarchpeak.com",
+    "phone": "+233 24 234 5678",
+    "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400",
+    "bio": "Expert in premium estates with a keen eye for architectural excellence and investment opportunities.",
+    "rating": 4.8,
+    "propertiesSold": 98,
+    "visible": true
+  },
+  {
+    "id": "3",
+    "name": "Kofi Asante",
+    "role": "Investment Advisor",
+    "email": "kofi.asante@monarchpeak.com",
+    "phone": "+233 24 345 6789",
+    "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400",
+    "bio": "Specialized in property investment strategies and portfolio management for discerning clients.",
+    "rating": 5,
+    "propertiesSold": 156,
+    "visible": true
+  },
+  {
+    "id": "4",
+    "name": "Ama Owusu",
+    "role": "Client Relations Manager",
+    "email": "ama.owusu@monarchpeak.com",
+    "phone": "+233 24 456 7890",
+    "image": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400",
+    "bio": "Dedicated to providing exceptional service and personalized solutions for luxury property seekers.",
+    "rating": 4.9,
+    "propertiesSold": 112,
+    "visible": true
+  }
+]

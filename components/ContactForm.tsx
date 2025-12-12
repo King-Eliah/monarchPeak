@@ -9,11 +9,34 @@ export default function ContactForm() {
     phone: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    alert('Thank you for your inquiry! We will contact you shortly.');
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (res.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', phone: '', message: '' });
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -92,8 +115,24 @@ export default function ContactForm() {
         />
       </div>
 
-      <button type="submit" className="btn-primary w-full">
-        SEND MESSAGE
+      {submitStatus === 'success' && (
+        <div className="bg-green-900/20 border border-green-500/50 text-green-400 px-4 py-3 text-sm">
+          Thank you for your inquiry! We will contact you shortly.
+        </div>
+      )}
+      
+      {submitStatus === 'error' && (
+        <div className="bg-red-900/20 border border-red-500/50 text-red-400 px-4 py-3 text-sm">
+          Failed to send message. Please try again.
+        </div>
+      )}
+
+      <button 
+        type="submit" 
+        className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
       </button>
     </form>
   );

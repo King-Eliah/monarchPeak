@@ -5,15 +5,27 @@ import Footer from '@/components/Footer';
 import PropertyCard from '@/components/PropertyCard';
 import Dropdown from '@/components/Dropdown';
 import Image from 'next/image';
-import { featuredProperties } from '@/lib/data';
 import { useState, useEffect } from 'react';
 
 export default function PropertiesPage() {
+  const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
   const [selectedLocation, setSelectedLocation] = useState('');
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [selectedBeds, setSelectedBeds] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/properties')
+      .then(res => res.json())
+      .then(data => {
+        // Filter only visible properties
+        const visibleProperties = data.filter((p: any) => p.visible !== false);
+        setFeaturedProperties(visibleProperties);
+      })
+      .catch(() => setFeaturedProperties([]));
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 50);
@@ -22,6 +34,16 @@ export default function PropertiesPage() {
 
   // Filter properties based on selected criteria
   const filteredProperties = featuredProperties.filter((property) => {
+    // Search term filter
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      const matchesSearch = 
+        property.title.toLowerCase().includes(searchLower) ||
+        property.location.toLowerCase().includes(searchLower) ||
+        property.description?.toLowerCase().includes(searchLower);
+      if (!matchesSearch) return false;
+    }
+
     // Location filter
     if (selectedLocation && property.location.toLowerCase().replace(/\s+/g, '-') !== selectedLocation) {
       return false;
@@ -29,7 +51,18 @@ export default function PropertiesPage() {
 
     // Price range filter
     if (selectedPriceRange) {
-      const price = parseInt(property.price.replace(/[$,]/g, ''));
+      // Convert price string to number (handles $1.2M, $950K format)
+      let price = 0;
+      const priceStr = property.price.replace(/[$,\s]/g, '');
+      
+      if (priceStr.includes('M')) {
+        price = parseFloat(priceStr.replace('M', '')) * 1000000;
+      } else if (priceStr.includes('K')) {
+        price = parseFloat(priceStr.replace('K', '')) * 1000;
+      } else {
+        price = parseFloat(priceStr);
+      }
+      
       if (selectedPriceRange === '0-500000' && price > 500000) return false;
       if (selectedPriceRange === '500000-1000000' && (price < 500000 || price > 1000000)) return false;
       if (selectedPriceRange === '1000000-2000000' && (price < 1000000 || price > 2000000)) return false;
@@ -37,13 +70,20 @@ export default function PropertiesPage() {
     }
 
     // Property type filter
-    if (selectedType && !property.title.toLowerCase().includes(selectedType)) {
-      return false;
+    if (selectedType) {
+      const titleLower = property.title.toLowerCase();
+      const typeLower = selectedType.toLowerCase();
+      if (!titleLower.includes(typeLower)) {
+        return false;
+      }
     }
 
     // Bedrooms filter
-    if (selectedBeds && property.beds < parseInt(selectedBeds)) {
-      return false;
+    if (selectedBeds) {
+      const minBeds = parseInt(selectedBeds);
+      if (property.beds < minBeds) {
+        return false;
+      }
     }
 
     return true;
@@ -77,6 +117,18 @@ export default function PropertiesPage() {
                 </h3>
                 
                 <div className="space-y-6">
+                  {/* Search Input */}
+                  <div>
+                    <label className="block text-xs text-gray-400 mb-3 tracking-widest">SEARCH</label>
+                    <input
+                      type="text"
+                      placeholder="Search properties..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full bg-luxury-black border border-white/20 px-4 py-3 text-white text-sm focus:outline-none focus:border-white transition-colors"
+                    />
+                  </div>
+
                   <Dropdown
                     label="LOCATION"
                     value={selectedLocation}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920",
+    "title": "Discover Your Dream Home",
+    "subtitle": "Luxury Properties in Prime Locations",
+    "order": 1,
+    "visible": true
+  },
+  {
+    "id": "2",
+    "image": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1920",
+    "title": "Modern Architectural Excellence",
+    "subtitle": "Where Design Meets Sophistication",
+    "order": 2,
+    "visible": true
+  },
+  {
+    "id": "3",
+    "image": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920",
+    "title": "Exclusive Estate Living",
+    "subtitle": "Experience Unparalleled Luxury",
+    "order": 3,
+    "visible": true
+  }
+]

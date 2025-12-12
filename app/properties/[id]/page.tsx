@@ -92,7 +92,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
               {galleryImages.map((img, idx) => (
                 <div 
                   key={idx}
-                  className="relative h-64 w-[85vw] flex-shrink-0 overflow-hidden cursor-pointer hover:opacity-75 transition-opacity border border-white/10"
+                  className="relative h-64 w-[85vw] shrink-0 overflow-hidden cursor-pointer hover:opacity-75 transition-opacity border border-white/10"
                   onClick={() => setActiveImageIndex(idx)}
                 >
                   <Image

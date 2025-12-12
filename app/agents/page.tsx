@@ -2,12 +2,25 @@
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { agents } from '@/lib/data';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import Link from 'next/link';
+
 export default function AgentsPage() {
+  const [agents, setAgents] = useState<any[]>([]);
   const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/agents')
+      .then(res => res.json())
+      .then(data => {
+        // Filter only visible agents
+        const visibleAgents = data.filter((a: any) => a.visible !== false);
+        setAgents(visibleAgents);
+      })
+      .catch(() => setAgents([]));
+  }, []);
 
   useEffect(() => {
     setIsVisible(true);
@@ -66,16 +79,24 @@ export default function AgentsPage() {
                     </p>
                   </div>
 
-                  <div className="border-t border-white/10 pt-6">
-                    <p className="text-center text-gray-400">
-                      <span className="text-3xl font-serif text-white block mb-1" style={{fontWeight: 300}}>{agent.properties}</span>
-                      <span className="text-xs tracking-widest" style={{fontWeight: 300}}>PROPERTIES SOLD</span>
-                    </p>
+                  <div className="border-t border-white/10 pt-6 grid grid-cols-2 gap-4 text-center">
+                    <div>
+                      <p className="text-2xl font-serif text-white" style={{fontWeight: 300}}>
+                        {agent.rating ? agent.rating.toFixed(1) : '5.0'}
+                      </p>
+                      <p className="text-xs text-gray-400 tracking-widest mt-1" style={{fontWeight: 300}}>RATING</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-serif text-white" style={{fontWeight: 300}}>
+                        {agent.propertiesSold || agent.properties || '50+'}
+                      </p>
+                      <p className="text-xs text-gray-400 tracking-widest mt-1" style={{fontWeight: 300}}>SOLD</p>
+                    </div>
                   </div>
 
-                  <a href={`/contact?agent=${encodeURIComponent(agent.name)}&email=${encodeURIComponent(agent.email)}`} className="btn-secondary w-full mt-6 block text-center">
-                    Contact Agent
-                  </a>
+                  <Link href={`/agents/${agent.id}`} className="btn-secondary w-full mt-6 block text-center">
+                    View Profile
+                  </Link>
                 </div>
               </div>
             ))}

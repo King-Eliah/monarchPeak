@@ -7,8 +7,19 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
+interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+  rating: number;
+  text: string;
+  visible?: boolean;
+}
+
 export default function AboutPage() {
   const [isVisible, setIsVisible] = useState(false);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   
   // Animation hooks for testimonials
   const testimonial1 = useScrollAnimation();
@@ -26,6 +37,18 @@ export default function AboutPage() {
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Fetch testimonials
+    fetch('/api/testimonials')
+      .then(res => res.json())
+      .then(data => {
+        console.log('Fetched testimonials:', data);
+        // Filter only visible testimonials
+        const visibleTestimonials = data.filter((t: Testimonial) => t.visible !== false);
+        console.log('Visible testimonials:', visibleTestimonials);
+        setTestimonials(visibleTestimonials);
+      })
+      .catch(err => console.error('Error fetching testimonials:', err));
   }, []);
 
   return (
@@ -159,205 +182,92 @@ export default function AboutPage() {
             <p className="text-gray-400 text-sm" style={{fontWeight: 300}}>What our clients say about us</p>
           </div>
           
+          {testimonials.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-400 text-lg">Loading testimonials...</p>
+            </div>
+          ) : (
+            <>
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Desktop Grid - All testimonials */}
-            {/* Testimonial 1 */}
-            <div ref={testimonial1.elementRef} className={`bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 ${testimonial1.isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
-              <div className="mb-6">
-                <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
+            {/* Desktop Grid - CMS Testimonials */}
+            {testimonials.map((testimonial, index) => {
+              return (
+              <div key={testimonial.id} className="bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 opacity-0 animate-slide-in-left" style={{animationDelay: `${index * 0.1}s`}}>
+                {testimonial.image && (
+                  <div className="mb-6 flex items-center gap-4">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      width={60}
+                      height={60}
+                      className="rounded-full object-cover"
+                    />
+                    <div className="flex text-yellow-500">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} className={`w-4 h-4 ${i < (testimonial.rating || 5) ? 'fill-current' : 'fill-gray-600'}`} viewBox="0 0 24 24">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="mb-6">
+                  <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                </div>
+                <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
+                  &quot;{testimonial.text}&quot;
+                </p>
+                <div className="border-t border-white/10 pt-6">
+                  <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>{testimonial.name.toUpperCase()}</p>
+                  <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>{testimonial.role}</p>
+                </div>
               </div>
-              <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                &quot;Working with MonarchPeak was an exceptional experience. Their attention to detail and commitment to finding us the perfect home was outstanding. We couldn&apos;t be happier with our new luxury residence.&quot;
-              </p>
-              <div className="border-t border-white/10 pt-6">
-                <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>KWAME OSEI</p>
-                <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>CEO, Tech Innovations Ghana</p>
-              </div>
-            </div>
-            
-            {/* Testimonial 2 */}
-            <div ref={testimonial2.elementRef} className={`bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 ${testimonial2.isVisible ? 'animate-slide-in-left' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
-              <div className="mb-6">
-                <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                &quot;Professional, knowledgeable, and truly dedicated to their clients. The team at MonarchPeak made our property search seamless and stress-free. Highly recommended for anyone seeking luxury properties in Accra.&quot;
-              </p>
-              <div className="border-t border-white/10 pt-6">
-                <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>AMARA MENSAH</p>
-                <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Investment Banker</p>
-              </div>
-            </div>
-            
-            {/* Testimonial 3 */}
-            <div ref={testimonial3.elementRef} className={`bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 ${testimonial3.isVisible ? 'animate-slide-in-left' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
-              <div className="mb-6">
-                <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                &quot;The level of service exceeded all expectations. From the initial consultation to closing, every step was handled with professionalism and care. Our dream home became a reality thanks to their expertise.&quot;
-              </p>
-              <div className="border-t border-white/10 pt-6">
-                <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>DAVID ADJEI</p>
-                <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Entrepreneur</p>
-              </div>
-            </div>
-            
-            {/* Testimonial 4 */}
-            <div ref={testimonial4.elementRef} className={`bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 ${testimonial4.isVisible ? 'animate-slide-in-left' : 'opacity-0'}`} style={{animationDelay: '0.3s'}}>
-              <div className="mb-6">
-                <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                &quot;MonarchPeak delivered beyond what we imagined. Their market knowledge and negotiation skills secured us an incredible property at the best value. Truly the best in the business.&quot;
-              </p>
-              <div className="border-t border-white/10 pt-6">
-                <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>SOPHIA ANKRAH</p>
-                <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Medical Director</p>
-              </div>
-            </div>
-            
-            {/* Testimonial 5 */}
-            <div ref={testimonial5.elementRef} className={`bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 ${testimonial5.isVisible ? 'animate-slide-in-left' : 'opacity-0'}`} style={{animationDelay: '0.4s'}}>
-              <div className="mb-6">
-                <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                &quot;Exceptional service from start to finish. The team understood exactly what we were looking for and presented options that perfectly matched our criteria. A truly five-star experience.&quot;
-              </p>
-              <div className="border-t border-white/10 pt-6">
-                <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>MICHAEL BOATENG</p>
-                <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Finance Executive</p>
-              </div>
-            </div>
-            
-            {/* Testimonial 6 */}
-            <div ref={testimonial6.elementRef} className={`bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 ${testimonial6.isVisible ? 'animate-slide-in-left' : 'opacity-0'}`} style={{animationDelay: '0.5s'}}>
-              <div className="mb-6">
-                <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                &quot;Their dedication to client satisfaction is unmatched. Every question was answered promptly, and they went above and beyond to ensure a smooth transaction. We are thrilled with our investment.&quot;
-              </p>
-              <div className="border-t border-white/10 pt-6">
-                <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>GRACE OWUSU</p>
-                <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Real Estate Investor</p>
-              </div>
-            </div>
+            )})}
           </div>
           
           {/* Mobile Horizontal Scroll */}
           <div className="md:hidden overflow-x-auto scrollbar-hide -mx-4 px-4">
             <div className="flex gap-6 pb-4" style={{width: 'max-content'}}>
-              {/* Testimonial 1 */}
-              <div className="bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 w-[85vw] flex-shrink-0">
-                <div className="mb-6">
-                  <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
+              {testimonials.map((testimonial) => (
+                <div key={testimonial.id} className="bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 w-[85vw] shrink-0">
+                  {testimonial.image && (
+                    <div className="mb-6 flex items-center gap-4">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        width={60}
+                        height={60}
+                        className="rounded-full object-cover"
+                      />
+                      <div className="flex text-yellow-500">
+                        {[...Array(5)].map((_, i) => (
+                          <svg key={i} className={`w-4 h-4 ${i < (testimonial.rating || 5) ? 'fill-current' : 'fill-gray-600'}`} viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                          </svg>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <div className="mb-6">
+                    <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
+                    &quot;{testimonial.text}&quot;
+                  </p>
+                  <div className="border-t border-white/10 pt-6">
+                    <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>{testimonial.name.toUpperCase()}</p>
+                    <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>{testimonial.role}</p>
+                  </div>
                 </div>
-                <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                  &quot;Working with MonarchPeak was an exceptional experience. Their attention to detail and commitment to finding us the perfect home was outstanding. We couldn&apos;t be happier with our new luxury residence.&quot;
-                </p>
-                <div className="border-t border-white/10 pt-6">
-                  <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>KWAME OSEI</p>
-                  <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>CEO, Tech Innovations Ghana</p>
-                </div>
-              </div>
-              
-              {/* Testimonial 2 */}
-              <div className="bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 w-[85vw] flex-shrink-0">
-                <div className="mb-6">
-                  <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
-                </div>
-                <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                  &quot;Professional, knowledgeable, and truly dedicated to their clients. The team at MonarchPeak made our property search seamless and stress-free. Highly recommended for anyone seeking luxury properties in Accra.&quot;
-                </p>
-                <div className="border-t border-white/10 pt-6">
-                  <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>AMARA MENSAH</p>
-                  <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Investment Banker</p>
-                </div>
-              </div>
-              
-              {/* Testimonial 3 */}
-              <div className="bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 w-[85vw] flex-shrink-0">
-                <div className="mb-6">
-                  <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
-                </div>
-                <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                  &quot;The level of service exceeded all expectations. From the initial consultation to closing, every step was handled with professionalism and care. Our dream home became a reality thanks to their expertise.&quot;
-                </p>
-                <div className="border-t border-white/10 pt-6">
-                  <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>DAVID ADJEI</p>
-                  <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Entrepreneur</p>
-                </div>
-              </div>
-              
-              {/* Testimonial 4 */}
-              <div className="bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 w-[85vw] flex-shrink-0">
-                <div className="mb-6">
-                  <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
-                </div>
-                <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                  &quot;MonarchPeak delivered beyond what we imagined. Their market knowledge and negotiation skills secured us an incredible property at the best value. Truly the best in the business.&quot;
-                </p>
-                <div className="border-t border-white/10 pt-6">
-                  <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>SOPHIA ANKRAH</p>
-                  <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Medical Director</p>
-                </div>
-              </div>
-              
-              {/* Testimonial 5 */}
-              <div className="bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 w-[85vw] flex-shrink-0">
-                <div className="mb-6">
-                  <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
-                </div>
-                <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                  &quot;Exceptional service from start to finish. The team understood exactly what we were looking for and presented options that perfectly matched our criteria. A truly five-star experience.&quot;
-                </p>
-                <div className="border-t border-white/10 pt-6">
-                  <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>MICHAEL BOATENG</p>
-                  <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Finance Executive</p>
-                </div>
-              </div>
-              
-              {/* Testimonial 6 */}
-              <div className="bg-luxury-black/60 backdrop-blur-sm border border-white/10 p-8 w-[85vw] flex-shrink-0">
-                <div className="mb-6">
-                  <svg className="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
-                </div>
-                <p className="text-gray-300 text-sm mb-6 leading-relaxed" style={{fontWeight: 300}}>
-                  &quot;Their dedication to client satisfaction is unmatched. Every question was answered promptly, and they went above and beyond to ensure a smooth transaction. We are thrilled with our investment.&quot;
-                </p>
-                <div className="border-t border-white/10 pt-6">
-                  <p className="text-white font-serif text-sm mb-1" style={{fontWeight: 400}}>GRACE OWUSU</p>
-                  <p className="text-gray-500 text-xs" style={{fontWeight: 300}}>Real Estate Investor</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
+            </>
+          )}
         </div>
       </section>
 
@@ -416,7 +326,7 @@ export default function AboutPage() {
           {/* Mobile Horizontal Scroll */}
           <div className="md:hidden overflow-x-auto scrollbar-hide -mx-4 px-4">
             <div className="flex gap-6" style={{width: 'max-content'}}>
-              <div className="text-center p-8 border border-white/10 w-[80vw] flex-shrink-0">
+              <div className="text-center p-8 border border-white/10 w-[80vw] shrink-0">
                 <div className="w-16 h-16 border border-white/20 flex items-center justify-center mx-auto mb-6">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -426,7 +336,7 @@ export default function AboutPage() {
                 <p className="text-gray-400 text-xs leading-relaxed" style={{fontWeight: 300}}>Transparent and honest in every transaction</p>
               </div>
               
-              <div className="text-center p-8 border border-white/10 w-[80vw] flex-shrink-0">
+              <div className="text-center p-8 border border-white/10 w-[80vw] shrink-0">
                 <div className="w-16 h-16 border border-white/20 flex items-center justify-center mx-auto mb-6">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -436,7 +346,7 @@ export default function AboutPage() {
                 <p className="text-gray-400 text-xs leading-relaxed" style={{fontWeight: 300}}>Exceeding expectations in service quality</p>
               </div>
               
-              <div className="text-center p-8 border border-white/10 w-[80vw] flex-shrink-0">
+              <div className="text-center p-8 border border-white/10 w-[80vw] shrink-0">
                 <div className="w-16 h-16 border border-white/20 flex items-center justify-center mx-auto mb-6">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -446,7 +356,7 @@ export default function AboutPage() {
                 <p className="text-gray-400 text-xs leading-relaxed" style={{fontWeight: 300}}>Your needs are our top priority</p>
               </div>
               
-              <div className="text-center p-8 border border-white/10 w-[80vw] flex-shrink-0">
+              <div className="text-center p-8 border border-white/10 w-[80vw] shrink-0">
                 <div className="w-16 h-16 border border-white/20 flex items-center justify-center mx-auto mb-6">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />

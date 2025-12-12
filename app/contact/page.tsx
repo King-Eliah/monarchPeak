@@ -34,16 +34,16 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
             {/* Contact Form */}
-            <div className={`bg-luxury-charcoal p-12 border border-white/10 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-              <h2 className="text-2xl font-serif mb-8 text-white" style={{fontWeight: 300, letterSpacing: '0.1em'}}>
+            <div className={`bg-luxury-charcoal p-12 border border-white/10 transition-all duration-1000 delay-300 ml-12 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+              <h2 className="text-2xl font-serif mb-8 text-white text-center" style={{fontWeight: 300, letterSpacing: '0.1em'}}>
                 SEND A MESSAGE
               </h2>
               <ContactForm />
             </div>
 
             {/* Contact Information */}
-            <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-              <h2 className="text-2xl font-serif mb-12 text-white" style={{fontWeight: 300, letterSpacing: '0.1em'}}>
+            <div className={`flex flex-col justify-center pl-12 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+              <h2 className="text-2xl font-serif mb-12 text-white text-left" style={{fontWeight: 300, letterSpacing: '0.1em'}}>
                 CONTACT DETAILS
               </h2>
               

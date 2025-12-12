@@ -4,11 +4,37 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PropertyCard from '@/components/PropertyCard';
 import CountUp from '@/components/CountUp';
-import { featuredProperties } from '@/lib/data';
 import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
+  const [heroSlides, setHeroSlides] = useState<any[]>([]);
+  
+  useEffect(() => {
+    // Fetch properties
+    fetch('/api/properties')
+      .then(res => res.json())
+      .then(data => {
+        // Filter only visible properties
+        const visibleProperties = data.filter((p: any) => p.visible !== false);
+        setFeaturedProperties(visibleProperties.slice(0, 4));
+      })
+      .catch(() => setFeaturedProperties([]));
+    
+    // Fetch hero slides
+    fetch('/api/hero')
+      .then(res => res.json())
+      .then(data => {
+        // Filter only visible slides
+        const visibleSlides = data.filter((s: any) => s.visible !== false);
+        const sorted = visibleSlides.sort((a: any, b: any) => a.order - b.order);
+        setHeroSlides(sorted);
+      })
+      .catch(() => setHeroSlides([]));
+  }, []);
+
   const heroContent = useScrollAnimation();
   const aboutLeft = useScrollAnimation();
   const aboutRight = useScrollAnimation();
@@ -25,14 +51,13 @@ export default function Home() {
   const beliefsRight = useScrollAnimation();
   const ctaSection = useScrollAnimation();
 
-  const heroImages = [
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920',
-    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920',
-    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920',
-  ];
+  const heroImages = heroSlides.length > 0 
+    ? heroSlides.map(slide => slide.image)
+    : [
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920',
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920',
+    ];
 
   return (
     <main className="bg-luxury-black">
@@ -48,6 +73,7 @@ export default function Home() {
                 src={img}
                 alt={`Luxury Home ${idx + 1}`}
                 fill
+                sizes="100vw"
                 className="object-cover brightness-[0.4]"
                 priority={idx === 0}
               />
@@ -108,6 +134,7 @@ export default function Home() {
                   src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800"
                   alt="Interior"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>

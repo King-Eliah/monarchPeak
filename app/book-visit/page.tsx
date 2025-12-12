@@ -17,6 +17,8 @@ export default function BookVisitPage() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -25,10 +27,29 @@ export default function BookVisitPage() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Form data would be sent to backend API here
+    setIsSubmitting(true);
+    setError(false);
+    
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      console.error('Booking submission error:', err);
+      setError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -250,10 +271,20 @@ export default function BookVisitPage() {
               />
             </div>
 
+            {error && (
+              <div className="bg-red-900/20 border border-red-500/50 text-red-400 px-6 py-4 text-sm">
+                Failed to submit booking. Please try again.
+              </div>
+            )}
+
             {/* Submit Button */}
             <div className="text-center pt-8">
-              <button type="submit" className="btn-primary">
-                SCHEDULE VISIT
+              <button 
+                type="submit" 
+                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'SUBMITTING...' : 'SCHEDULE VISIT'}
               </button>
             </div>
           </form>
